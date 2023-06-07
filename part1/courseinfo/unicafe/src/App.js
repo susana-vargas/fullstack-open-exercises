@@ -21,6 +21,8 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const all = good + neutral + bad
+  
 
   return (
     <>
@@ -32,15 +34,18 @@ const App = () => {
       <Parrafo content={'good ' + good}/>
       <Parrafo content={'neutral ' + neutral}/>
       <Parrafo content={'bad ' + bad}/>
+      <Parrafo content={'all ' + all}/>
+      <Parrafo content={'positive ' + (all > 0 ? (good / all * 100) : 0) + ' %' }/>
     </>
   )
 }
-
+//se usa un operador ternario para crear una condicion ^
 export default App
 
 //la aplicacion debe mostrar:
 
 // -good, neutral, all (catidades)>
 //(y los muestre por parrafo debajo del segundo encabesado) LISTO
-// -numero de comentarios positivos
+// -numero total de comentarios
+// -porcentage de comentarios positivos
 // -promedio 
