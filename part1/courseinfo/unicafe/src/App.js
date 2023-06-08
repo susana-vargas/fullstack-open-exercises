@@ -7,10 +7,10 @@ const Button = (props) => (
   </button>
 )
 //componente para crear parrafos
-const Parrafo = (props) => {
+const parrafo = (props) => {
   return (
     <>
-    <p>{props.content}</p>
+    <h1>{props.content}</h1>
     </>
   )
 }
@@ -34,8 +34,7 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
   const all = good + neutral + bad
-  const positive = all > 0 ? (good / all * 100) : 0
-  
+  const positive = all > 0 ? (good / all * 100) : 0 
 
   return (
     <>
@@ -44,10 +43,11 @@ const App = () => {
       <Button handleClick={() => setNeutral(neutral + 1)} text='neutral' />
       <Button handleClick={() => setBad(bad + 1)} text='bad' />
       <h1>statistics</h1>
-      <Estatics good={'good ' + good} neutral={'neutral ' + neutral} bad={'bad ' + bad} all={'all ' + all} positive={'positive ' + positive + ' %' }/>
+      {all > 0 ? <Estatics good={'good ' + good} neutral={'neutral ' + neutral} bad={'bad ' + bad} all={'all ' + all} positive={'positive ' + positive + ' %' } /> : <p>No feedback given</p>}
     </>
   )
 }
+//condicion ternaria con props 
 //solo se manda a llamar con todos los props asignados en una sola linea (<Estatics good={'good ' + good} neutral={'neutral ' + neutral} bad={'bad ' + bad} all={'all ' + all} />)
 //se usa un operador ternario para crear una condicion (all > 0 ? (good / all * 100) : 0)
 export default App
