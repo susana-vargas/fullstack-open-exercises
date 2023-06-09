@@ -14,15 +14,24 @@ const parrafo = (props) => {
     </>
   )
 }
-//es un componente que 5 props 
-const Estatics = (props) => {
+
+const StatisticLine = ({text, value}) => {
+  
+   return (
+    <>
+   <p>{text} {value}</p>
+   </>
+   )
+}
+
+//es un componente que 4 props que manad a llamar un componente al que solo se le asigna el nombre de la prop
+const Statistics = ({good, neutral , bad, all}) => {
   return (
     <>
-    <p>{props.good}</p>
-    <p>{props.neutral}</p>
-    <p>{props.bad}</p>
-    <p>{props.all}</p>
-    <p>{props.positive}</p>
+    <StatisticLine text={good.statistic} value={good.value}/>
+    <StatisticLine text={neutral.statistic} value={neutral.value}/>
+    <StatisticLine text={bad.statistic} value={bad.value}/>
+    <StatisticLine text={all.statistic} value={all.value}/>
     </>
   )
 }
@@ -43,7 +52,7 @@ const App = () => {
       <Button handleClick={() => setNeutral(neutral + 1)} text='neutral' />
       <Button handleClick={() => setBad(bad + 1)} text='bad' />
       <h1>statistics</h1>
-      {all > 0 ? <Estatics good={'good ' + good} neutral={'neutral ' + neutral} bad={'bad ' + bad} all={'all ' + all} positive={'positive ' + positive + ' %' } /> : <p>No feedback given</p>}
+      {all > 0 ? <Statistics good={{statistic: 'good', value: good}} neutral={{statistic: 'neutral', value: neutral}} bad={{statistic: 'bad', value: bad}} all={{statistic: 'all', value: positive + '%'}} /> : <p>No feedback given</p>}
     </>
   )
 }
@@ -59,3 +68,8 @@ export default App
 // -numero total de comentarios
 // -porcentage de comentarios positivos
 // -promedio 
+
+//se manda a llamar pormedio de objetos, dentro tiene dos parametros el texto y (se podria decir que esuna variable donde guarda su estado de cantidad de comentarios)
+//{all > 0 ? <Statistics good={{statistic: 'good', value: good}} neutral={{statistic: 'neutral', value: neutral}} bad={{statistic: 'bad', value: bad}} all={{statistic: 'all', value: positive + '%'}} /> : <p>No feedback given</p>}
+
+//{all > 0 ? <Statistics good={'good ' + good} neutral={'neutral ' + neutral} bad={'bad ' + bad} all={'all ' + all} positive={'positive ' + positive + ' %' } /> : <p>No feedback given</p>}
