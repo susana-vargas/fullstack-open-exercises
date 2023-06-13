@@ -6,6 +6,24 @@ const Button = (props) => (
   </button>
 )
 
+const PrincipalHeader = (props) => {
+  return (
+    <>
+    <h1>{props.title}</h1>
+    </>
+  )
+}
+
+const Header = (props) => {
+  return (
+    <>
+    <h1>{props.title}</h1>
+    </>
+  )
+}
+
+
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -19,51 +37,60 @@ const App = () => {
   ];
   //se llama al hook useState para darle estado al componente
   const [selected, setSelected] = useState(0);  
+  // crea un arreglo de (indice de  la variable) y que sea el arreglo de cantidad de ceros
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
- // crea un arreglo de (indice de  la variable) y que sea el arreglo de cantidad de ceros
   
- //esta funcion resibe de parametros min y max y multiplica el resltado de math.random por
- //la diferencia entre el valor minimo y el maximo del rango, y luego suma el valor minimo
- //Math.floor se utiliza para redondear el resultado hacia abajo y obtener un número entero.
+ 
+ // esta funcion retorna un numero aleatorio entre el rango de numeros que se le dan
   const randomNumber = (min, max) => {
     const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
     return randomNumber
   }
+
   //es un componente de boton que saca un numero aleatorio 
   const onClick = () => {
     const min = 0
     const max = anecdotes.length - 1
     const randomNum = randomNumber(min, max)    
-    console.log('indice', randomNum);
     setSelected(randomNum)
   } 
   
-  console.log(votes)
+  
   //es la copia de un componente que le saca el contenido al arrego y ala variable le suma 1
   const vote = () => {
     const copy = [...votes]
     copy[selected] = copy[selected] + 1
     setVotes(copy)    
   }
- //es una funcion que le suma uno a la variable y la muestra en la consola 
-  let number1 = 0
-  const analisis = () => {
-    
-    number1 = number1 + 1
-    console.log(number1)
-    number1 += 1
-    console.log(number1)
-    number1++
-    console.log(number1)
-  }
 
+// saca el numero mayor y su indice 
+  //laboratory
+  let i = 0;
+  let max = 0;
+  let indexOfGreatest = 0
+  while (i < votes.length) {
+   const element = votes[i];
+   if (element > max) {
+    max = element;
+    indexOfGreatest = i
+   }
+  i++;
+}
+console.log(max, 'aqui esta mi log', indexOfGreatest);
+
+
+//end of laboratory
+ 
   return (
     <div>
+      <PrincipalHeader title={'Anecdotes of the day'}/>
       {anecdotes[selected]} <br />
       <p>has {votes[selected]} votes</p>
       <Button handleClick={onClick}  text='next anecdote'/>
       <Button handleClick={vote}  text='vote'/>
-      <Button handleClick={analisis}  text='analisis'/>
+      <Header title={'Anecdote with most votes'}/>
+      <p>{anecdotes[indexOfGreatest]}</p>
+      <p>has {votes[indexOfGreatest]} votes</p>
     </div>
   )
 }
