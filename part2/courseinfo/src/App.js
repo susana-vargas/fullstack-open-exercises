@@ -1,66 +1,93 @@
+//import Note from './components/Note'
 
-const Header = (props) => {
-  console.log(props);
+const Header = ({ course }) => <h1>{course}</h1>;
+
+const Part = ({ part }) => (
+  <p>
+    {part.name} {part.exercises}
+  </p>
+);
+
+const Content = ({ parts }) => {
+  console.log(parts, 'consol desde el content');
   return (
     <>
-    <h1>{props.titulo}</h1>
+      <Part part={parts[0]} />
+      <Part part={parts[1]} />
+      <Part part={parts[2]} />
+      <Part part={parts[3]} />
     </>
-  )
-}
+  );
+};
 
-const Content = (props) => {
-  return (
-    <>
-      <Part parrafo1={props.parrafo1} cant1={props.cant1}/>
-      <Part parrafo1={props.parrafo2} cant1={props.cant2}/>
-      <Part parrafo1={props.parrafo3} cant1={props.cant3}/>
-    </>
-  )
-}
+//const Total = ({ exercises1, exercises2, exercises3 }) => (
+//  <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
+//);
 
-const Total = (props) => {
-  return (
-    <>
-    <p>Number total de exercises {props.total} </p>
-    </>
-  )
+const Course = ({ course }) => {
   
-  
-}
-
-const Part = (props) => {
   return (
     <>
-    <p>{props.parrafo1} {props.cant1} </p>
+      <Header course={course.name} />
+      <Content parts={course.parts}/>
     </>
-  )
-}
+  );
+};
+
 
 const App = () => {
-  const course = 'Half Stack application development'
-  const parts = [
-    {
-      name: 'Fundamentals of React',
-      exercises: 10
-    },
-    {
-      name: 'Using props to pass data',
-      exercises: 7
-    },
-    {
-      name: 'State of a component',
-      exercises: 14
-    }
-  ]
+  const course = {
+    id: 1,
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10,
+        id: 1
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7,
+        id: 2
+      },
+      {
+        name: 'State of a component',
+        exercises: 14,
+        id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
+      },
+    ],
+  };
+
+
+  //lavoratorio
+
+  const numbers = [10, 7, 14, 11]
+
+
+  const total = numbers.reduce(
+    (primerValor, segundoValor) => primerValor + segundoValor
+  )
+  console.log(total);
+
+  
+  //fin del lavoratorio 
 
 
   return (
     <div>
-      <Header titulo={course} />
-      <Content parrafo1={parts[0].name.exercises} parrafo2={parts[1].name.exercises} parrafo3={parts[2].name.exercises}/>
-      <Total total={parts[0].exercises + parts[1].exercises + parts[2].exercises}  /*contenido1={exercises1} contenido2={exercises2} contenido3={exercises3}*//>
+      <Course course={course}/>
+      <h4>{<p>Total of exercises {total}</p>}</h4>
+      <ul>
+        
+      </ul>
     </div>
-  )
-}
 
-export default App
+  );
+};
+
+export default App;
