@@ -9,31 +9,34 @@ const Part = ({ part }) => (
 );
 
 const Content = ({ parts }) => {
-  console.log(parts, 'consol desde el content');
   return (
     <>
-      <Part part={parts[0]} />
-      <Part part={parts[1]} />
-      <Part part={parts[2]} />
-      <Part part={parts[3]} />
+      {parts.map((part) => {
+        return <Part key={part.id} part={part} />;
+      })}
     </>
   );
 };
 
-//const Total = ({ exercises1, exercises2, exercises3 }) => (
-//  <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
-//);
+const Total = ({ exercises }) => {
+  const sum = exercises.reduce((a, b) => a + b);
+  return (
+    <p>
+      <b>Number of exercises {sum}</b>
+    </p>
+  );
+};
 
 const Course = ({ course }) => {
-  
+  const exercisesForCourse = course.parts.map((part) => part.exercises);
   return (
     <>
       <Header course={course.name} />
-      <Content parts={course.parts}/>
+      <Content parts={course.parts} />
+      <Total exercises={exercisesForCourse} />
     </>
   );
 };
-
 
 const App = () => {
   const course = {
@@ -43,50 +46,45 @@ const App = () => {
       {
         name: 'Fundamentals of React',
         exercises: 10,
-        id: 1
+        id: 1,
       },
       {
         name: 'Using props to pass data',
         exercises: 7,
-        id: 2
+        id: 2,
       },
       {
         name: 'State of a component',
         exercises: 14,
-        id: 3
+        id: 3,
       },
       {
         name: 'Redux',
         exercises: 11,
-        id: 4
+        id: 4,
+      },
+      {
+        name: 'otro curso',
+        exercises: 100,
+        id: 6,
       },
     ],
   };
 
-
   //lavoratorio
 
-  const numbers = [10, 7, 14, 11]
+  // const numbers = [10, 7, 14, 11];
 
+  // const total = numbers.reduce(
+  //   (primerValor, segundoValor) => primerValor + segundoValor
+  // );
 
-  const total = numbers.reduce(
-    (primerValor, segundoValor) => primerValor + segundoValor
-  )
-  console.log(total);
-
-  
-  //fin del lavoratorio 
-
+  //fin del lavoratorio
 
   return (
-    <div>
-      <Course course={course}/>
-      <h4>{<p>Total of exercises {total}</p>}</h4>
-      <ul>
-        
-      </ul>
-    </div>
-
+    <>
+      <Course course={course} />
+    </>
   );
 };
 
