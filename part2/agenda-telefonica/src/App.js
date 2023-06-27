@@ -14,14 +14,23 @@ const App = () => {
   //al persons, esto es para que se pueda agregar mas contenido al arreglo
   const addName = (event) => {
     event.preventDefault()
-    const nameObject = {
-      name: newName,
-      id: persons.length + 1,
-    }
-    setPersons(persons.concat(nameObject));
-    setNewName('')
+      //si no encuentra algo que cumpla la condicion el valer de la consatante sera indefinido
+    const personFinded = persons.find((person) => person.name === newName);
+    //si la constante es una desigualdad estricta se ejecuta una  condicion, si esta repetida
+    //muestra el alert si no, se ejecuta el obgeto 
+    if (personFinded !== undefined) {
+      alert(newName + ' ya esta en la guía telefónica')
+    } else {
+      const nameObject = {
+        name: newName,
+        id: persons.length + 1,
+      }
+      setPersons(persons.concat(nameObject));
+      //y se le concatena al arreglo 
+      setNewName('')
+    }    
   }
-  //y se le concatena al arreglo ^
+
   return (
     <div>
       <h2>Phonebook</h2>
