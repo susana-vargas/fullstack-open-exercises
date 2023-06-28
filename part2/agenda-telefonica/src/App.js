@@ -1,54 +1,83 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' , id: 1, number: 5577116284},
-    { name: 'Ada Lovelace' , id: 2, number: 39445323523},
-    { name: 'Dan Abramov' , id: 3, number: 1243234345},
-    { name: 'Mary Poppendieck' , id: 4, number: 39236423122}
-  ]) 
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
+    { id: 1, name: 'Juan Martinez', number: '1234567890' },
+    { id: 2, name: 'María', number: '9876543210' },
+    { id: 3, name: 'Carlos', number: '5551234567' },
+    { id: 4, name: 'Laura', number: '9998887777' },
+    { id: 5, name: 'Pedro', number: '4445556666' },
+    { id: 6, name: 'Ana', number: '1112223333' },
+    { id: 7, name: 'Luis', number: '9990001111' },
+    { id: 8, name: 'Carmen', number: '7778889999' },
+    { id: 9, name: 'Javier', number: '3334445555' },
+    { id: 10, name: 'Sofía', number: '2223334444' },
+    { id: 11, name: 'Miguel', number: '6667778888' },
+    { id: 12, name: 'Isabella', number: '5556667777' },
+    { id: 13, name: 'Andrés', number: '8889990000' },
+    { id: 14, name: 'Valentina', number: '7770001111' },
+    { id: 15, name: 'Diego', number: '1112223333' },
+    { id: 16, name: 'Camila', number: '4445556666' },
+    { id: 17, name: 'José', number: '9998887777' },
+    { id: 18, name: 'Lucía', number: '5551234567' },
+    { id: 19, name: 'Fernando', number: '9876543210' },
+    { id: 20, name: 'Gabriela', number: '1234567890' },
+  ]);
+  const [newName, setNewName] = useState('');
+  const [newNumber, setNewNumber] = useState('');
+  const [filter, setFilter] = useState('');
 
   const handleNameInputChange = (event) => {
     setNewName(event.target.value);
-  }
+  };
 
   const handlePhoneInputChange = (event) => {
-    setNewNumber(event.target.value)
-  }
-  //se le agrega la extencion al elemento que es un arreglo es este caso 
+    setNewNumber(event.target.value);
+  };
+  //se le agrega la extencion al elemento que es un arreglo es este caso
   //al persons, esto es para que se pueda agregar mas contenido al arreglo
   const addRecord = (event) => {
-    event.preventDefault()
-      //si no encuentra algo que cumpla la condicion el valer de la consatante sera indefinido
+    event.preventDefault();
+    //si no encuentra algo que cumpla la condicion el valer de la consatante sera indefinido
     const personFinded = persons.find((person) => person.name === newName);
     //si la constante es una desigualdad estricta se ejecuta una condicion, si esta repetida
-    //muestra el alert si no, se ejecuta el obgeto 
+    //muestra el alert si no, se ejecuta el obgeto
     if (personFinded !== undefined) {
-      alert(newName + ' ya esta en la guía telefónica ' + newNumber)
+      alert(newName + ' ya esta en la guía telefónica ' + newNumber);
     } else {
       const nameObject = {
         name: newName,
         number: newNumber,
         id: persons.length + 1,
-      }
+      };
       setPersons(persons.concat(nameObject));
-      //y se le concatena al arreglo 
-      setNewName('')
-      setNewNumber('')
-      
-    }    
-  }
-  const filteredNames = persons.filter((person) => person.name.includes(newName))
-      console.log(filteredNames, 'desde filter e includes');
+      //y se le concatena al arreglo
+      setNewName('');
+      setNewNumber('');
+    }
+  };
+
+  const filteredNames = persons.filter((person) =>
+    person.name.includes(filter)
+  );
+
+  console.log(filteredNames, 'filtrado de nombres');
+
+  const namesToShow = filter.length > 0 ? filteredNames : persons;
+
+  const handleFilterInputChange = (event) => {
+    setFilter(event.target.value);
+  };
+
+  console.log(filter,'filter');
   return (
     <div>
       <h2>Phonebook</h2>
       <div>
-          filter shown with: <input value={newName} onChange={handleNameInputChange} />
-        </div>
-        <h2>add a new</h2>
+        filter shown with
+        <input value={filter} onChange={handleFilterInputChange} />
+      </div>
+      <h2>add a new</h2>
       <form onSubmit={addRecord}>
         <div>
           name: <input value={newName} onChange={handleNameInputChange} />
@@ -62,13 +91,17 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {persons.map((person) => <li key={person.id}>{person.name} {person.number} </li>)}
-        </ul>
+        {namesToShow.map((person) => (
+          <li key={person.id}>
+            {person.name} {person.number}{' '}
+          </li>
+        ))}
+      </ul>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 
 //por cada persona de personas, el id de el arreglo y el los nombres que guarda el arreglo
 //{persons.map((person) => <li key={person.id}>{person.name}</li>)}
