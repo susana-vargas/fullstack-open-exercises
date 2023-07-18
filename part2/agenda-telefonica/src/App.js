@@ -3,6 +3,7 @@ import axios from 'axios'
 import Filter from './components/Filter';
 import PersonList from './components/PersonList';
 import PersonForm from './components/PersonForm';
+import dataService from './services/data'
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -12,13 +13,11 @@ const App = () => {
 
     
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then((response) => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
+    dataService
+    .getAll()
+    .then(initialPersons => {
+      setPersons(initialPersons)
+    })
   }, [])
   
 
@@ -46,15 +45,14 @@ const App = () => {
         id: persons.length + 1,
       };
 
-      axios
-    .post('http://localhost:3001/persons', nameObject)
-    .then(response => {
-      setPersons(persons.concat(response.data));
-      //y se le concatena al arreglo
-      setNewName('');
-      setNewNumber('');
-    })
 
+      dataService
+      .create(nameObject)
+      .then(returnedPersons => {
+        setPersons(persons.concat(returnedPersons))
+        setNewName('');
+        setNewNumber('');
+      })
       
     }
   };
