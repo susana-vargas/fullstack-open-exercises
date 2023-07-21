@@ -1,13 +1,18 @@
 const PersonList = ({ namesToShow, deletPerson }) => {
-  const label = PersonList.deletPerson
-  ? 'DELET' : 'DELET'
-  
+  const label = PersonList.deletPerson ? 'DELET' : 'DELET';
+
   return (
     <ul>
       {namesToShow.map((person) => (
         <li key={person.id}>
-          {person.name} {person.number}{' '}
-          <button onClick={deletPerson}>{label}</button>
+          {person.name} {person.number}
+          <button
+            onClick={() => {
+              deletPerson(person.id, person.name);
+            }}
+          >
+            {label}
+          </button>
         </li>
       ))}
     </ul>

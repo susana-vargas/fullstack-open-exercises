@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import Filter from './components/Filter';
 import PersonList from './components/PersonList';
 import PersonForm from './components/PersonForm';
-import dataService from './services/data'
+import dataService from './services/data';
+import data from './services/data';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,19 +12,20 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
 
-    
-  const deletPerson = () => {
-    alert('Quieres eliminar ?')
-  }
+  const deletPerson = (id, name) => {
+    const deletePerson = window.confirm('Quieres eliminar a ' + name + ' ?');
+    if (deletePerson === true) {
+      dataService.deleteItem(id).then((response) => {
+        setPersons(persons.filter((person) => person.id !== id));
+      });
+    }
+  };
 
   useEffect(() => {
-    dataService
-    .getAll()
-    .then(initialPersons => {
-      setPersons(initialPersons)
-    })
-  }, [])
-  
+    dataService.getAll().then((initialPersons) => {
+      setPersons(initialPersons);
+    });
+  }, []);
 
   const handleNameInputChange = (event) => {
     setNewName(event.target.value);
@@ -49,22 +51,17 @@ const App = () => {
         id: persons.length + 1,
       };
 
-
-      dataService
-      .create(nameObject)
-      .then(returnedPersons => {
-        setPersons(persons.concat(returnedPersons))
+      dataService.create(nameObject).then((returnedPersons) => {
+        setPersons(persons.concat(returnedPersons));
         setNewName('');
         setNewNumber('');
-      })
-      
+      });
     }
   };
 
   const filteredNames = persons.filter((person) =>
     person.name.toLowerCase().includes(filter)
   );
-
 
   const namesToShow = filter.length > 0 ? filteredNames : persons;
 
@@ -76,16 +73,19 @@ const App = () => {
     <div>
       <h1>Phonebook</h1>
       <div>
-        <Filter  filter={filter} handleFilterInputChange={handleFilterInputChange} />
+        <Filter
+          filter={filter}
+          handleFilterInputChange={handleFilterInputChange}
+        />
       </div>
       <h2>add a new</h2>
-    <PersonForm
-      newName={newName}
-      newNumber={newNumber}
-      handleNameInputChange={handleNameInputChange}
-      handlePhoneInputChange={handlePhoneInputChange}
-      addRecord={addRecord}
-    />
+      <PersonForm
+        newName={newName}
+        newNumber={newNumber}
+        handleNameInputChange={handleNameInputChange}
+        handlePhoneInputChange={handlePhoneInputChange}
+        addRecord={addRecord}
+      />
       <h2>Numbers</h2>
       <PersonList namesToShow={namesToShow} deletPerson={deletPerson} />
     </div>
