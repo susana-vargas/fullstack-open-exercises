@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios'
+//import axios from 'axios'
 import Filter from './components/Filter';
 import PersonList from './components/PersonList';
 import PersonForm from './components/PersonForm';
@@ -12,6 +12,10 @@ const App = () => {
   const [filter, setFilter] = useState('');
 
     
+  const deletPerson = () => {
+    alert('Quieres eliminar ?')
+  }
+
   useEffect(() => {
     dataService
     .getAll()
@@ -83,7 +87,7 @@ const App = () => {
       addRecord={addRecord}
     />
       <h2>Numbers</h2>
-      <PersonList namesToShow={namesToShow} />
+      <PersonList namesToShow={namesToShow} deletPerson={deletPerson} />
     </div>
   );
 };
