@@ -4,7 +4,7 @@ import Filter from './components/Filter';
 import PersonList from './components/PersonList';
 import PersonForm from './components/PersonForm';
 import dataService from './services/data';
-import data from './services/data';
+//import data from './services/data';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -20,6 +20,13 @@ const App = () => {
       });
     }
   };
+
+  const editPersonNumber = () => {
+    if (newNumber === '7751465560') {
+      console.log(':|'); 
+    }
+  }
+  editPersonNumber()
 
   useEffect(() => {
     dataService.getAll().then((initialPersons) => {
@@ -81,10 +88,10 @@ const App = () => {
       <h2>add a new</h2>
       <PersonForm
         newName={newName}
-        newNumber={newNumber}
+        newNumber={newNumber} editPersonNumber={editPersonNumber}
         handleNameInputChange={handleNameInputChange}
         handlePhoneInputChange={handlePhoneInputChange}
-        addRecord={addRecord}
+        addRecord={addRecord} 
       />
       <h2>Numbers</h2>
       <PersonList namesToShow={namesToShow} deletPerson={deletPerson} />

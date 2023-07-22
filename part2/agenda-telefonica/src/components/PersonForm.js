@@ -21,3 +21,7 @@ const PersonForm = ({
 };
 
 export default PersonForm;
+//cuando ingresen a una persona que ya esta registrada en la agenda, pero tiene otro
+//numero de telefono y la quieran agregar se tiene que disparar una ventana de
+//confirmacion, si es true el numero anterior se tendra que remplazar por el nuevo 
+//numero ingresado

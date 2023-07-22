@@ -20,3 +20,6 @@ const PersonList = ({ namesToShow, deletPerson }) => {
 };
 
 export default PersonList;
+//operadores logicos
+//si el nombre existe y el numero es diferente
+/* newName === newName && newNumber !== newNumber */
