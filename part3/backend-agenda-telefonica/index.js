@@ -34,6 +34,10 @@ app.get('/api/persons', (req, res) => {
 
 app.get('/api/info', (req, res) => {
   const personsCount = persons.length
+  const now = new Date();
+  const offsetMinutes = -360; 
+  const gmtMinus6Date = new Date(now.getTime() + offsetMinutes * 60000); 
+  console.log(gmtMinus6Date)
   res.send(` ponebook has info for ${personsCount.toString()} people`)
 })
 
