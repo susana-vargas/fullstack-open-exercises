@@ -22,7 +22,23 @@ let persons = [
       "id": 4,
       "name": "Mary Poppendieck", 
       "number": "39-23-6423122"
+    },
+    { 
+      "id": 5,
+      "name": "Nieves", 
+      "number": "39-23-6423122"
+    },
+    { 
+      "id": 6,
+      "name": "Ganjah", 
+      "number": "39-23-6423122"
+    },
+    { 
+      "id": 7,
+      "name": "Pochita", 
+      "number": "39-23-6423122"
     }
+
 ]
 
 app.get('/api/persons', (req, res) => {
@@ -71,29 +87,30 @@ const generateId = () => {
 app.post('/api/persons', (request, response) => {
   const body = request.body
 
-  if (!body.name && !body.number) {
+  if (!body.name || !body.number) {
     return response.status(400).json({ 
       error: 'Missing name and number' 
     })
   }
+  const existingName = persons.find(person => person.name === body.name)
 
-  if (persons.name === body.name) {
-    return response.status(400).json({ 
-      error: 'the name already exists' 
+  console.log(existingName);//
+
+  if(existingName){
+    return response.status(400).json({
+      error: 'the name already exists'
     })
   }
 
   const person = {
     id: generateId(),
-    //content: body.content,
     name: body.name,
     number: body.number,
-    important: body.important || false
   }
 
   persons = persons.concat(person)
 
-  response.json(persons)
+  response.json(person)
 })
 
 const PORT = 3001
